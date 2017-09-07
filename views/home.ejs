@@ -1,0 +1,16 @@
+<html>
+<head>
+    <title>Reserve Status</title>
+</head>
+<body>
+<div id="reserveStacksDiv" style="width: 1700px; height: 700px;"></div>
+<span>Schedules last fetched at <%= last_updated_at.toString() %></span>
+<button onclick="updateSchedulesNow()">Update Scheules Now</button>
+<script>
+    var reservesArray_ = <%- JSON.stringify(reserves)%>;
+</script>
+<script src="./libs/js/jquery.min.js"></script>
+<script src="./libs/js/plotly.min.js"></script>
+<script src="reserve.js"></script>
+</body>
+</html>

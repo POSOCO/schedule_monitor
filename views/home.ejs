@@ -3,9 +3,34 @@
     <title>Reserve Status</title>
 </head>
 <body>
-<div id="reserveStacksDiv" style="width: 1700px; height: 700px;"></div>
+<div id="reserveStacksDiv" style="width: 1900px; height: 850px;"></div>
+<label style='margin-right:20px'><input type="checkbox" class="gen_select" onclick="refreshReservePlot()" checked value="CGPL"> CGPL</label>
+<label style='margin-right:20px'><input type="checkbox" class="gen_select" onclick="refreshReservePlot()" checked value="GANDHAR-APM"> GANDHAR-APM</label>
+<label style='margin-right:20px'><input type="checkbox" class="gen_select" onclick="refreshReservePlot()" checked value="GANDHAR-NAPM"> GANDHAR-NAPM</label>
+<label style='margin-right:20px'><input type="checkbox" class="gen_select" onclick="refreshReservePlot()" checked value="GANDHAR-RLNG"> GANDHAR-RLNG</label>
+<label style='margin-right:20px'><input type="checkbox" class="gen_select" onclick="refreshReservePlot()" checked value="KAWAS-APM"> KAWAS-APM</label>
+<label style='margin-right:20px'><input type="checkbox" class="gen_select" onclick="refreshReservePlot()" checked value="KAWAS-NAPM"> KAWAS-NAPM</label>
+<label style='margin-right:20px'><input type="checkbox" class="gen_select" onclick="refreshReservePlot()" checked value="KAWAS-RLNG"> KAWAS-RLNG</label>
+<label style='margin-right:20px'><input type="checkbox" class="gen_select" onclick="refreshReservePlot()" checked value="KSTPS-I&II"> KSTPS-I&II</label>
+<label style='margin-right:20px'><input type="checkbox" class="gen_select" onclick="refreshReservePlot()" checked value="KSTPS7"> KSTPS7</label>
+<label style='margin-right:20px'><input type="checkbox" class="gen_select" onclick="refreshReservePlot()" checked value="MOUDA"> MOUDA</label>
+<label style='margin-right:20px'><input type="checkbox" class="gen_select" onclick="refreshReservePlot()" checked value="MOUDA_II"> MOUDA_II</label>
+<label style='margin-right:20px'><input type="checkbox" class="gen_select" onclick="refreshReservePlot()" checked value="NSPCL"> NSPCL</label>
+<label style='margin-right:20px'><input type="checkbox" class="gen_select" onclick="refreshReservePlot()" checked value="RGPPL_IR"> RGPPL_IR</label>
+<label style='margin-right:20px'><input type="checkbox" class="gen_select" onclick="refreshReservePlot()" checked value="SASAN"> SASAN</label>
+<label style='margin-right:20px'><input type="checkbox" class="gen_select" onclick="refreshReservePlot()" checked value="SIPAT-I"> SIPAT-I</label>
+<label style='margin-right:20px'><input type="checkbox" class="gen_select" onclick="refreshReservePlot()" checked value="SIPAT-II"> SIPAT-II</label>
+<label style='margin-right:20px'><input type="checkbox" class="gen_select" onclick="refreshReservePlot()" checked value="VSTPS-I"> VSTPS-I</label>
+<label style='margin-right:20px'><input type="checkbox" class="gen_select" onclick="refreshReservePlot()" checked value="VSTPS-II"> VSTPS-II</label>
+<label style='margin-right:20px'><input type="checkbox" class="gen_select" onclick="refreshReservePlot()" checked value="VSTPS-III"> VSTPS-III</label>
+<label style='margin-right:20px'><input type="checkbox" class="gen_select" onclick="refreshReservePlot()" checked value="VSTPS-IV"> VSTPS-IV</label>
+<label style='margin-right:20px'><input type="checkbox" class="gen_select" onclick="refreshReservePlot()" checked value="VSTPS-V"> VSTPS-V</label>
+
+<br><br>
+
 <span>Schedules last fetched at <%= last_updated_at.toString() %></span>
 <button onclick="updateSchedulesNow()">Update Scheules Now</button>
+<label><input id="togglePageRefreshBtn" type="checkbox" checked> Enable Auto Page Refresh for 2 minutes</label>
 <script>
     var reservesArray_ = <%- JSON.stringify(reserves)%>;
 </script>

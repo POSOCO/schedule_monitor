@@ -92,8 +92,7 @@ function traceReservesPlot() {
         },
         yaxis: {
             title: 'Margins'
-        },
-        hovermode: 'closest'
+        }
     };
 
     Plotly.newPlot(stacksDiv, stackedArea(traces), layout);
@@ -136,7 +135,7 @@ function stackedArea(traces) {
     var i, j;
     for (i = 0; i < traces.length; i++) {
         traces[i].text = [];
-        traces[i].hoverinfo = 'text';
+        traces[i].hoverinfo = 'none';
         for (j = 0; j < (traces[i]['y'].length); j++) {
             traces[i].text.push(traces[i]['name'] + " (" + traces[i]['y'][j].toFixed(0) + ")");
         }

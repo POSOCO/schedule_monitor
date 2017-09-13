@@ -76,6 +76,7 @@ function traceReservesPlot() {
             yLabels[k] = value;
             textTooltips[k] = generatorNames[i] + " (" + (k + 1) + ")";
         }
+        var traceColorHue = (360 * (i + 1)) / generatorNames.length;
         traces.push({
             x: xLabels,
             y: yLabels,
@@ -88,10 +89,14 @@ function traceReservesPlot() {
         title: 'Spinning Reserve Margin Status as per Revision number ' + revNumber,
         xaxis: {
             title: 'Block Number',
-            dtick: 2
+            dtick: 4
         },
         yaxis: {
+            dtick: 100,
             title: 'Margins'
+        },
+        legend: {
+            orientation: 'h'
         }
     };
 

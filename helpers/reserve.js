@@ -38,6 +38,7 @@ function makeTwoDigits(x) {
     if (x < 10) {
         return "0" + x;
     }
+    return x;
 }
 
 var getReserveObjects;

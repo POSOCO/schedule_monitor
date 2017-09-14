@@ -62,6 +62,7 @@ function traceReservesPlot() {
         xLabels.push(i + 1);
     }
     var traces = [];
+    var traceColors = ["#F44336", "#E91E63", "#9C27B0", "#673AB7", "#3F51B5", "#2196F3", "#03A9F4", "#00BCD4", "#009688", "#4CAF50", "#8BC34A", "#CDDC39", "#FFEB3B", "#FFC107", "#FF9800", "#FF5722", "#795548", "#9E9E9E", "#607D8B", "#000000", "#76FF03"];
     for (var i = 0; i < generatorNames.length; i++) {
         if (activeGenerators.indexOf(generatorNames[i]) == -1) {
             continue;
@@ -96,7 +97,10 @@ function traceReservesPlot() {
             title: 'Margins'
         },
         legend: {
-            orientation: 'h'
+            orientation: 'h',
+            font: {
+                "size": "20"
+            }
         }
     };
 
@@ -140,7 +144,7 @@ function stackedArea(traces) {
     var i, j;
     for (i = 0; i < traces.length; i++) {
         traces[i].text = [];
-        traces[i].hoverinfo = 'none';
+        traces[i].hoverinfo = 'text';
         for (j = 0; j < (traces[i]['y'].length); j++) {
             traces[i].text.push(traces[i]['name'] + " (" + traces[i]['y'][j].toFixed(0) + ")");
         }

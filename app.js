@@ -3,6 +3,7 @@ var morgan = require('morgan');
 var cors = require('./config/cors');
 var favicon = require('serve-favicon');
 var ReserveHelper = require('./helpers/reserve');
+var WindHelper = require('./helpers/mh_wind');
 var monitoringInterval_g = 30000;
 var app = express();
 var port = process.env.PORT || 3000;
@@ -55,6 +56,9 @@ app.use(function (err, req, res, next) {
 
 ReserveHelper.setReserveFetchTiming();
 ReserveHelper.setReserveFetchTimeInterval(monitoringInterval_g);
+WindHelper.setDataFetchTimeInterval(monitoringInterval_g);
+WindHelper.setDataFetchTiming();
+
 
 app.listen(port, function () {
     console.log('Listening on port ' + port + ' ...');

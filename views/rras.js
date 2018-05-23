@@ -12,8 +12,7 @@ var getBlockValue = function (blk, arrIndex) {
 
 var headingsArray;
 // finding the generator names, heading names, indices for plotting
-var onBarHeadings = ["CGPL_DC_ONBAR", "SOLAPUR_DC_ONBAR", "GANDHAR-APM_DC_ONBAR", "GANDHAR-NAPM_DC_ONBAR", "GANDHAR-RLNG_DC_ONBAR", "KAWAS-APM_DC_ONBAR", "KAWAS-NAPM_DC_ONBAR", "KAWAS-RLNG_DC_ONBAR", "KSTPS-I&II_DC_ONBAR", "KSTPS7_DC_ONBAR", "MOUDA_DC_ONBAR", "MOUDA_II_DC_ONBAR", "NSPCL_DC_ONBAR", "RGPPL_IR_DC_ONBAR", "SASAN_DC_ONBAR", "SIPAT-I_DC_ONBAR", "SIPAT-II_DC_ONBAR", "VSTPS-I_DC_ONBAR", "VSTPS-II_DC_ONBAR", "VSTPS-III_DC_ONBAR", "VSTPS-IV_DC_ONBAR", "VSTPS-V_DC_ONBAR"];
-var schHeadings = ["CGPL_TOTAL", "SOLAPUR_TOTAL", "GANDHAR-APM_TOTAL", "GANDHAR-NAPM_TOTAL", "GANDHAR-RLNG_TOTAL", "KAWAS-APM_TOTAL", "KAWAS-NAPM_TOTAL", "KAWAS-RLNG_TOTAL", "KSTPS-I&II_TOTAL", "KSTPS7_TOTAL", "MOUDA_TOTAL", "MOUDA_II_TOTAL", "NSPCL_TOTAL", "RGPPL_IR_TOTAL", "SASAN_TOTAL", "SIPAT-I_TOTAL", "SIPAT-II_TOTAL", "VSTPS-I_TOTAL", "VSTPS-II_TOTAL", "VSTPS-III_TOTAL", "VSTPS-IV_TOTAL", "VSTPS-V_TOTAL"];
+var onBarHeadings = ["CGPL_RRAS", "SOLAPUR_RRAS", "GANDHAR-APM_RRAS", "GANDHAR-NAPM_RRAS", "GANDHAR-RLNG_RRAS", "KAWAS-APM_RRAS", "KAWAS-NAPM_RRAS", "KAWAS-RLNG_RRAS", "KSTPS-I&II_RRAS", "KSTPS7_RRAS", "MOUDA_RRAS", "MOUDA_II_RRAS", "NSPCL_RRAS", "RGPPL_IR_RRAS", "SASAN_RRAS", "SIPAT-I_RRAS", "SIPAT-II_RRAS", "VSTPS-I_RRAS", "VSTPS-II_RRAS", "VSTPS-III_RRAS", "VSTPS-IV_RRAS", "VSTPS-V_RRAS"];
 var generatorNames = ["CGPL", "SOLAPUR", "GANDHAR-APM", "GANDHAR-NAPM", "GANDHAR-RLNG", "KAWAS-APM", "KAWAS-NAPM", "KAWAS-RLNG", "KSTPS-I&II", "KSTPS7", "MOUDA", "MOUDA_II", "NSPCL", "RGPPL_IR", "SASAN", "SIPAT-I", "SIPAT-II", "VSTPS-I", "VSTPS-II", "VSTPS-III", "VSTPS-IV", "VSTPS-V"];
 var onBarHeadingsIndices = [];
 var schHeadingsIndices = [];
@@ -40,9 +39,7 @@ function doOnLoadStuff() {
     for (var i = 0; i < onBarHeadings.length; i++) {
         onBarHeadingsIndices[i] = headingsArray.indexOf(onBarHeadings[i]);
     }
-    for (var i = 0; i < schHeadings.length; i++) {
-        schHeadingsIndices[i] = headingsArray.indexOf(schHeadings[i]);
-    }
+    
     revNumber = reservesArray_[headingsArray.indexOf("REVNO_MAX")][1];
     stacksDiv = document.getElementById("reserveStacksDiv");
     traceReservesPlot();
@@ -70,10 +67,10 @@ function traceReservesPlot() {
         var yLabels = [];
         var textTooltips = [];
         for (var k = 0; k < 96; k++) {
-            var value = getBlockValue(k + 1, onBarHeadingsIndices[i]) - getBlockValue(k + 1, schHeadingsIndices[i]);
-            if (value < 0) {
+            var value = +getBlockValue(k + 1, onBarHeadingsIndices[i]);
+            /*if (value < 0) {
                 value = 0;
-            }
+            }*/
             yLabels[k] = value;
             textTooltips[k] = generatorNames[i] + " (" + (k + 1) + ")";
         }
@@ -87,7 +84,7 @@ function traceReservesPlot() {
     }
     traces[0].fill = 'tozeroy';
     var layout = {
-        title: 'Spinning Reserve Margin Status as per Revision number ' + revNumber,
+        title: 'RRAS Status as per Revision number ' + revNumber,
         xaxis: {
             title: 'Block Number',
             dtick: 4
@@ -121,7 +118,23 @@ function traceReservesPlot() {
         .on('plotly_unhover', function (data) {
             //document.getElementById("reserveInfoDiv").innerHTML = '';
         });
-	document.title = "Reserve @Rev " + revNumber;
+		document.title = "RRAS @Rev " + revNumber;
+		
+	// update the RRAS MU quantum in the selection elements stub
+	var rrasMUTexts = [];
+	for (var i = 0; i < genSelectionElements.length; i++) {
+		var genNameIndex = generatorNames.indexOf(genSelectionElements[i].value);
+		if(genNameIndex == -1){
+			continue;
+		}
+		var megaWattSum = 0;
+        for (var k = 0; k < 96; k++) {
+            var value = +getBlockValue(k + 1, onBarHeadingsIndices[genNameIndex]);
+            megaWattSum += value;
+        }
+		rrasMUTexts.push(genSelectionElements[i].value + " (" + (megaWattSum/4000).toFixed(2) +")");
+    }
+	document.getElementById('rrasMUText').innerHTML = rrasMUTexts.join(" | ");
 }
 
 function refreshReservePlot() {
